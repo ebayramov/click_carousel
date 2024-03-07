@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <style>
+        #slider {
+            overflow: hidden;
+            position: relative;
+            width: 80%;
+            height: 80vh;
+            margin: 10vh auto;
+            box-shadow: 0 0 10px #333;
+        }
+
+        #slide2,
+        #slide1 {
+            width: 100%;
+            position: absolute;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="slider">
+        <div id="slide1"></div>
+        <div id="slide2"></div>
+    </div>
+
+    <script>
+
+        $(() => {
+            let imgarr = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg"]
+            let slider = $("#slider")
+            let slide1 = $("#slide1")
+            let slide2 = $("#slide2")
+            let x = 0
+
+            slider
+                .click((e) => {
+                    if (e.pageX > $(window).width() / 2) change(1)
+                    else change(-1)
+                })
+            change(0)
+
+
+            function change(dir = 1) {
+                x += dir
+                if (x < 0) x = imgarr.length - 1
+                else if (x > imgarr.length - 1) x = 0
+                slide2
+                    .css({
+                        left: `${-dir * 100}%`,
+                        background: `url('img/${imgarr[x]}') center/cover`,
+                    })
+                    .animate({
+                        left: 0,
+                    }, 'slow')
+                slide1
+                    .animate({ left: `${dir * 100}%` }, 'slow', function () {
+                        $(this).css({
+                            left: `0px`,
+                            background: `url('img/${imgarr[x]}') center/cover`,
+                        })
+                    })
+
+                // slide
+                //     .css({
+                //         left: `${dir * 100}%`,
+                //         background: `url('img/${imgarr[x]}') center/cover`,
+                //     })
+                //     .animate({ left: 0 }, 'slow', function () {
+                //         slider.css({ background: `url('../img/${imgarr[x]}') center/cover`, })
+                //     })
+            }
+
+
+
+
+        })
+    </script>
+</body>
+
+</html>
